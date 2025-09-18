@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Grade Calculator</title>
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+  <body style="text-align: center">
+
+    <h2>Grade Calculator</h2>
+    <p>To calculate your grade for a course, enter each assignment with its corresponding grade (%) and weighting (%).</p>
+
+    <table border="2">
+      <thead>
+        <tr>
+          <th>Assignment</th>
+          <th>Grade</th>
+          <th>Weight</th>
+        </tr>
+      </thead>
+      <tbody id="grade-table-body">
+      </tbody>
+    </table>
+
+    <div id="calc-container"> 
+        <div id="calc-rows">
+            <button id="rowbutton" onclick="addRow()">Add Rows</button><br>
+            <button id="calculatebutton" onclick="calculateGrade()">Calculate</button>
+            <button id="clearbutton" onclick="clearGrade()">Clear</button>
+        </div>
+    </div>
+
+
+
+
+    <a href="../index.html">
+        <button>Back</button>
+    <script src="../renderer.js"></script>
+
+
+    </body>
+  </html>
+    

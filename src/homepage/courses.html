@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title id ="coursestitle">Courses</title>
+    <link rel="stylesheet" href="../index.css" />
+  </head>
+
+  <body style="text-align: center; margin-top: 50px;">
+    <h2>Courses</h2>
+    <p>Welcome to the courses section. To add a course, click the 'Add a course' button below. Each course will have a study timer and an area to add specific assignments or tasks.</p>
+    <button id="coursesbutton" onclick="createCourse()">Add a course</button><br><br>
+  
+    <input type="text" id="courseInput" placeholder="Enter course name" style="display:none;">
+    <select id="colorSelect" style="display:none;">
+      <option value="" disabled selected>Select Color</option>
+      <option value="#ffe8e8">Red</option>
+      <option value="#e8ffe8">Green</option>
+      <option value="#e8e8ff">Blue</option>
+      <option value="#fff5e8">Orange</option>
+      <option value="#ea97f0">Pink</option>
+      <option value="#9b979c">Grey</option>
+    </select>
+    <button id="saveBtn" style="display:none;">Save</button>
+  
+    <div id="course-container" style="margin-top: 20px;"></div>
+  
+    <a href="../index.html">
+      <button>Back</button>
+    </a>
+
+    <script src="../renderer.js"></script>
+  </body>
+  
+</html>
+
+<style>
+  .title {
+    font-family: 'Minecraftia';
+  }
+</style>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Course Page</title>
+  <link rel="stylesheet" href="../index.css" />
+</head>
+<body>
+  <h1 id="course-title"></h1>
+  
+
+  <h2>Assignments</h2>
+  <p>Add an assignment and its due date below:</p>
+  <input id="task-input" placeholder="New Assignment">
+  <input id="date-input" type="date">
+  <button id="add-task-btn">Add Assignment</button>
+  <ul id="task-list"></ul>
+
+  <h2>Study Timer</h2>
+  <div id="timer-display">05:00</div>
+  <div id="timer-controls1">
+    <button id="start-btn">Start</button>
+    <button id="stop-btn">Stop</button>
+  </div>
+  <div id="timer-controls2">
+    <button id="reset-btn">Reset to 5 min</button>
+    <button id="add-time-btn">Add 5 min</button><br><br>
+  </div>
+  <div class="center-link">
+    <a id="backto" href="courses.html" style="text-align: center; text-decoration: none; color: rgb(197, 127, 124);">Back to Courses</a>
+  </div>
+
+
+<script>
+
+    const courseName = new URLSearchParams(location.search).get('course');
+    document.getElementById('course-title').textContent = `Welcome to ${courseName}`;
+
+    const taskInput = document.getElementById('task-input');
+    const dateInput = document.getElementById('date-input');
+    const taskList = document.getElementById('task-list');
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const taskKey = `tasks_${courseName}`;
+    let tasks = JSON.parse(localStorage.getItem(taskKey)) || [];
+
+    showTasks();
+    function showTasks() {
+  taskList.innerHTML = '';
+  if (tasks.length === 0) {
+    taskList.style.display = 'none';
+  } else {
+    taskList.style.display = 'block';
+    tasks.forEach((task, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${task.text} — Due: ${task.date}`;
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.style.marginLeft = '10px';
+      deleteBtn.style.marginLeft = '10px';
+      deleteBtn.style.padding = '6px 12px';
+      deleteBtn.style.backgroundColor = '#716767'; 
+      deleteBtn.style.color = '#fff';
+      deleteBtn.style.border = 'none';
+      deleteBtn.style.borderRadius = '5px';
+      deleteBtn.style.cursor = 'pointer';
+      deleteBtn.addEventListener('click', function () {
+        tasks.splice(index, 1);
+        localStorage.setItem(taskKey, JSON.stringify(tasks));
+        showTasks();
+      });
+
+      li.appendChild(deleteBtn);
+      taskList.appendChild(li);
+    });
+  }
+}
+
+addTaskBtn.onclick = function() {
+  const text = taskInput.value.trim();
+  const date = dateInput.value;
+  if (text && date) {
+    tasks.push({ text, date });
+    localStorage.setItem(taskKey, JSON.stringify(tasks));
+    showTasks();
+    taskInput.value = '';
+    dateInput.value = '';
+  }
+};
+
+
+    let timeLeft = 300;
+    let timer = null;
+    const timerDisplay = document.getElementById('timer-display');
+
+    function updateTimer() {
+      let min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+      let sec = String(timeLeft % 60).padStart(2, '0');
+      timerDisplay.textContent = `${min}:${sec}`;
+    }
+    updateTimer();
+
+    document.getElementById('start-btn').onclick = function() {
+      if (timer || timeLeft <= 0) return;
+      timer = setInterval(function() {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) stopTimer();
+      }, 1000);
+    };
+
+    function stopTimer() {
+      clearInterval(timer);
+      timer = null;
+    }
+    document.getElementById('stop-btn').onclick = stopTimer;
+
+    document.getElementById('reset-btn').onclick = function() {
+      stopTimer();
+      timeLeft = 300;
+      updateTimer();
+    };
+
+    document.getElementById('add-time-btn').onclick = function() {
+      timeLeft += 300;
+      updateTimer();
+    };
+  </script>
+</body>
+</html>
